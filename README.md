@@ -1,2 +1,2 @@
-# weekz
-일정 요약 어플리케이션 weekz📆
+# android
+나ㅇ만 안드로이드 repository 입니다
