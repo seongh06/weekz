@@ -13,16 +13,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Weekz"
         tools:targetApi="36">
-        <activity
-            android:name="com.lucas.weekz.presentation.ui.main.MainActivity"
+
+        <activity android:name=".presentation.ui.sign.SplashActivity"
             android:exported="true"
-            android:label="@string/app_name"
             android:theme="@style/Theme.Weekz">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name="com.lucas.weekz.presentation.ui.main.MainActivity"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.Weekz">
         </activity>
 
 <!--        <activity-->
