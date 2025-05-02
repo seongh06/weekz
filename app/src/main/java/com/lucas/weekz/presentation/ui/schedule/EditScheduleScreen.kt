@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -52,19 +53,12 @@ fun EditScheduleScreen(
         R.drawable.img_small_white_1
     } else {
         R.drawable.img_small_white_1
-    }/*
-    val selectSchedule = remember { viewModel.selectSchedule }
-    val uiState = viewModel.uiState
-    LaunchedEffect(selectSchedule.value) {
-        val selectSchedule = viewModel.getSelectSchedule()
-        Log.d("EditScheduleScreen", "getSelectSchedule : $selectSchedule")
-        if(selectSchedule == null){
-            Log.d("EditScheduleScreen", "getSelectSchedule is null")
-        }else{
+    }
+    LaunchedEffect(selectSchedule) {
+        if(selectSchedule != null){
             viewModel.updateScheduleData(selectSchedule.title,selectSchedule.date,selectSchedule.time,selectSchedule.location,selectSchedule.memo)
         }
-    }*/
-
+    }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = Color.Transparent,
@@ -123,14 +117,9 @@ fun EditScheduleScreen(
                 }
                 Spacer(modifier = Modifier.size(30.dp))
 
-                // EditScheduleCard를 보여줍니다.
-                if (selectSchedule != null) {
-                    EditScheduleCard(
-                        viewModel = viewModel
-                    )
-                }else{
-                    Log.d("EditScheduleScreen", "selectSchedule is null")
-                }
+                EditScheduleCard(
+                    viewModel = viewModel
+                )
             }
             Button(
                 onClick = {
@@ -150,14 +139,7 @@ fun EditScheduleScreen(
                     style = Typography.bodyMedium
                 )
             }
+            Spacer(modifier = Modifier.size(50.dp))
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun EditScheduleScreenPreview() {
-    ThemedApp {
-        EditScheduleScreen(navController = null, viewModel = hiltViewModel())
     }
 }

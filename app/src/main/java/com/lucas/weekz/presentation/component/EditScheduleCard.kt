@@ -1,12 +1,13 @@
 package com.lucas.weekz.presentation.component
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -41,7 +42,9 @@ fun EditScheduleCard(
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Column {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(10.dp)
+        ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "제목",
@@ -50,32 +53,29 @@ fun EditScheduleCard(
                     textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.size(20.dp))
-                OutlinedTextField(
-                    value = viewModel.title.value,
-                    onValueChange = {
-                        viewModel.updateScheduleData(
-                            newTitle = it,
-                            newDate = viewModel.date.value,
-                            newTime = viewModel.time.value,
-                            newLocation = viewModel.location.value,
-                            newMemo = viewModel.memo.value
-                        )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(19.dp),
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ){ OutlinedTextField(
+                        value = viewModel.title.value.also { Log.d("EditScheduleCard", "title value: $it") }, // 로그 추가
+                        onValueChange = {
+                            viewModel.updateTitleData(it)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                    placeholder = { Text("") },
                     textStyle = Typography.bodyMedium,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color.Black,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedBorderColor = Color.Transparent,
-                        unfocusedBorderColor = Color.Transparent,
-                        disabledBorderColor = Color.Transparent
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            disabledBorderColor = Color.Transparent
+                        )
                     )
-                )
+                }
             }
-            Spacer(modifier = Modifier.size(10.dp))
+            Spacer(modifier = Modifier.size(-20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "날짜",
@@ -84,32 +84,30 @@ fun EditScheduleCard(
                     textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.size(20.dp))
-                OutlinedTextField(
-                    value = viewModel.date.value,
-                    onValueChange = {
-                        viewModel.updateScheduleData(
-                            newTitle = viewModel.title.value,
-                            newDate = it,
-                            newTime = viewModel.time.value,
-                            newLocation = viewModel.location.value,
-                            newMemo = viewModel.memo.value
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    OutlinedTextField(
+                        value = viewModel.date.value.also { Log.d("EditScheduleCard", "date value: $it") }, // 로그 추가
+                        onValueChange = {
+                            viewModel.updateDateData(it)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        placeholder = { Text("") },
+                        textStyle = Typography.bodyMedium,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            disabledBorderColor = Color.Transparent
                         )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(19.dp),
-                    textStyle = Typography.bodyMedium,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color.Black,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedBorderColor = Color.Transparent,
-                        unfocusedBorderColor = Color.Transparent,
-                        disabledBorderColor = Color.Transparent
                     )
-                )
+                }
             }
-            Spacer(modifier = Modifier.size(10.dp))
+            Spacer(modifier = Modifier.size(-20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "시간",
@@ -118,32 +116,30 @@ fun EditScheduleCard(
                     textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.size(20.dp))
-                OutlinedTextField(
-                    value = viewModel.time.value,
-                    onValueChange = {
-                        viewModel.updateScheduleData(
-                            newTitle = viewModel.title.value,
-                            newDate = viewModel.date.value,
-                            newTime = it,
-                            newLocation = viewModel.location.value,
-                            newMemo = viewModel.memo.value
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    OutlinedTextField(
+                        value = viewModel.time.value.also { Log.d("EditScheduleCard", "time value: $it") }, // 로그 추가
+                        onValueChange = {
+                            viewModel.updateTimeData(it)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        placeholder = { Text("") },
+                        textStyle = Typography.bodyMedium,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            disabledBorderColor = Color.Transparent
                         )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(19.dp),
-                    textStyle = Typography.bodyMedium,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color.Black,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedBorderColor = Color.Transparent,
-                        unfocusedBorderColor = Color.Transparent,
-                        disabledBorderColor = Color.Transparent
                     )
-                )
+                }
             }
-            Spacer(modifier = Modifier.size(10.dp))
+            Spacer(modifier = Modifier.size(-20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "장소",
@@ -152,32 +148,30 @@ fun EditScheduleCard(
                     textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.size(20.dp))
-                OutlinedTextField(
-                    value = viewModel.location.value,
-                    onValueChange = {
-                        viewModel.updateScheduleData(
-                            newTitle = viewModel.title.value,
-                            newDate = viewModel.date.value,
-                            newTime = viewModel.time.value,
-                            newLocation = it,
-                            newMemo = viewModel.memo.value
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    OutlinedTextField(
+                        value = viewModel.location.value.also { Log.d("EditScheduleCard", "location value: $it") }, // 로그 추가
+                        onValueChange = {
+                            viewModel.updateLocationData(it)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        placeholder = { Text("") },
+                        textStyle = Typography.bodyMedium,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            disabledBorderColor = Color.Transparent
                         )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(19.dp),
-                    textStyle = Typography.bodyMedium,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color.Black,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedBorderColor = Color.Transparent,
-                        unfocusedBorderColor = Color.Transparent,
-                        disabledBorderColor = Color.Transparent
                     )
-                )
+                }
             }
-            Spacer(modifier = Modifier.size(10.dp))
+            Spacer(modifier = Modifier.size(-20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
                     text = "메모",
@@ -186,30 +180,29 @@ fun EditScheduleCard(
                     textAlign = TextAlign.Start
                 )
                 Spacer(modifier = Modifier.size(20.dp))
-                OutlinedTextField(
-                    value = viewModel.memo.value,
-                    onValueChange = {
-                        viewModel.updateScheduleData(
-                            newTitle = viewModel.title.value,
-                            newDate = viewModel.date.value,
-                            newTime = viewModel.time.value,
-                            newLocation = viewModel.location.value,
-                            newMemo = it
+                Box(
+                    modifier = Modifier.fillMaxWidth()
+                ){
+                    OutlinedTextField(
+                        value = viewModel.memo.value.also { Log.d("EditScheduleCard", "memo value: $it") }, // 로그 추가
+                        onValueChange = {
+                            Log.d("EditScheduleCard", "onValueChange - memo: $it")
+                            viewModel.updateMemoData(it)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        placeholder = { Text("") },
+                        textStyle = Typography.bodyMedium,
+                        colors = OutlinedTextFieldDefaults.colors(
+                            focusedContainerColor = Color.Transparent,
+                            unfocusedContainerColor = Color.Transparent,
+                            disabledContainerColor = Color.Transparent,
+                            focusedBorderColor = Color.Transparent,
+                            unfocusedBorderColor = Color.Transparent,
+                            disabledBorderColor = Color.Transparent
                         )
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(19.dp),
-                    textStyle = Typography.bodyMedium,
-                    colors = OutlinedTextFieldDefaults.colors(
-                        focusedContainerColor = Color.Black,
-                        unfocusedContainerColor = Color.Transparent,
-                        disabledContainerColor = Color.Transparent,
-                        focusedBorderColor = Color.Transparent,
-                        unfocusedBorderColor = Color.Transparent,
-                        disabledBorderColor = Color.Transparent
                     )
-                )
+                }
             }
         }
     }

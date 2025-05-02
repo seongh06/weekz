@@ -54,4 +54,20 @@ class ScheduleViewModel @Inject constructor() : ViewModel() {
     fun getScheduleListCount(): Int {
         return scheduleList.size
     }
+
+    fun updateTitleData(newTitle: String) {
+        title.value = newTitle
+    }
+    fun updateDateData(newDate: String) {
+        date.value = newDate
+    }
+    fun updateTimeData(newTime: String) {
+        time.value = newTime
+    }
+    fun updateLocationData(newLocation: String) {
+        location.value = newLocation
+    }
+    fun updateMemoData(newMemo: String) {
+        memo.value = newMemo
+    }
 }
