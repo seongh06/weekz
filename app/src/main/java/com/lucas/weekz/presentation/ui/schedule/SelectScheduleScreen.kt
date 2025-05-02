@@ -41,7 +41,7 @@ fun SelectScheduleScreen(
 ) {
     val uiColor = if (isSystemInDarkTheme()) Color.White else Black
     val smallImage = if (isSystemInDarkTheme()) {
-        R.drawable.img_small_white_1
+        R.drawable.img_small_black_1
     } else {
         R.drawable.img_small_white_1
     }

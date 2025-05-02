@@ -63,7 +63,7 @@ fun EditScheduleCard(
                         modifier = Modifier
                             .fillMaxWidth(),
                     placeholder = { Text("") },
-                    textStyle = Typography.bodyMedium,
+                    textStyle = Typography.bodyMedium.copy(color = Black),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
@@ -95,7 +95,7 @@ fun EditScheduleCard(
                         modifier = Modifier
                             .fillMaxWidth(),
                         placeholder = { Text("") },
-                        textStyle = Typography.bodyMedium,
+                        textStyle = Typography.bodyMedium.copy(color = Black),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
@@ -127,7 +127,7 @@ fun EditScheduleCard(
                         modifier = Modifier
                             .fillMaxWidth(),
                         placeholder = { Text("") },
-                        textStyle = Typography.bodyMedium,
+                        textStyle = Typography.bodyMedium.copy(color = Black),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
@@ -159,7 +159,7 @@ fun EditScheduleCard(
                         modifier = Modifier
                             .fillMaxWidth(),
                         placeholder = { Text("") },
-                        textStyle = Typography.bodyMedium,
+                        textStyle = Typography.bodyMedium.copy(color = Black),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,
@@ -192,7 +192,7 @@ fun EditScheduleCard(
                         modifier = Modifier
                             .fillMaxWidth(),
                         placeholder = { Text("") },
-                        textStyle = Typography.bodyMedium,
+                        textStyle = Typography.bodyMedium.copy(color = Black),
                         colors = OutlinedTextFieldDefaults.colors(
                             focusedContainerColor = Color.Transparent,
                             unfocusedContainerColor = Color.Transparent,

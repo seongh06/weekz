@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -26,16 +27,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.lucas.weekz.R
 import com.lucas.weekz.presentation.component.EditScheduleCard
 import com.lucas.weekz.presentation.theme.Black
-import com.lucas.weekz.presentation.theme.ThemedApp
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.theme.White
+import com.lucas.weekz.presentation.ui.main.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -50,7 +49,7 @@ fun EditScheduleScreen(
 
     val uiColor = if (isSystemInDarkTheme()) Color.White else Black
     val smallImage = if (isSystemInDarkTheme()) {
-        R.drawable.img_small_white_1
+        R.drawable.img_small_black_1
     } else {
         R.drawable.img_small_white_1
     }
@@ -120,26 +119,25 @@ fun EditScheduleScreen(
                 EditScheduleCard(
                     viewModel = viewModel
                 )
+                Button(
+                    onClick = {
+                        navController?.navigate(Screen.CompleteScheduleScreen.route)
+                    },
+                    modifier = Modifier
+                        .padding(vertical = 5.dp, horizontal = 20.dp),
+                    colors = ButtonDefaults.buttonColors(
+                        containerColor = White
+                    ),
+                    shape = RoundedCornerShape(999.dp)
+                ) {
+                    Text(
+                        text = "확정",
+                        color = Black,
+                        style = Typography.bodyMedium
+                    )
+                }
+                Spacer(modifier = Modifier.height(50.dp))
             }
-            Button(
-                onClick = {
-                    navController?.popBackStack()
-                },
-                modifier = Modifier
-                    .padding(vertical = 5.dp, horizontal = 20.dp)
-                    .align(Alignment.BottomCenter),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = White
-                ),
-                shape = RoundedCornerShape(999.dp)
-            ) {
-                Text(
-                    text = "확정",
-                    color = Black,
-                    style = Typography.bodyMedium
-                )
-            }
-            Spacer(modifier = Modifier.size(50.dp))
         }
     }
 }

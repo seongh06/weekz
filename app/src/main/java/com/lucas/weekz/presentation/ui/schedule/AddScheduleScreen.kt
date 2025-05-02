@@ -1,16 +1,13 @@
 package com.lucas.weekz.presentation.ui.schedule
 
-import android.app.Activity
-import android.content.Context
-import android.content.Intent
 import android.util.Log
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -20,7 +17,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.OutlinedTextField
@@ -50,7 +46,6 @@ import com.lucas.weekz.presentation.theme.Black
 import com.lucas.weekz.presentation.theme.ThemedApp
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.ui.main.Screen
-import com.lucas.weekz.presentation.ui.sign.SplashActivity
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -157,17 +152,13 @@ fun AddScheduleScreen(navController: NavHostController?) {
                     }
                 }
             }
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .size(20.dp)
+                    .background(Color.Transparent)
+            )
         }
-    }
-}
-
-fun navigateToSplashScreen(context: Context) {
-    val intent = Intent(context, SplashActivity::class.java).apply {
-        flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_SINGLE_TOP
-    }
-    context.startActivity(intent)
-    if (context is Activity) {
-        context.finish()
     }
 }
 

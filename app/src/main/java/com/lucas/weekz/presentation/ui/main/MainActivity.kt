@@ -10,6 +10,7 @@ import androidx.navigation.compose.rememberNavController
 import com.lucas.weekz.presentation.Utill.composableActivityViewModel
 import com.lucas.weekz.presentation.theme.ThemedApp
 import com.lucas.weekz.presentation.ui.schedule.AddScheduleScreen
+import com.lucas.weekz.presentation.ui.schedule.CompleteScheduleScreen
 import com.lucas.weekz.presentation.ui.schedule.EditScheduleScreen
 import com.lucas.weekz.presentation.ui.schedule.ScheduleViewModel
 import com.lucas.weekz.presentation.ui.schedule.SelectScheduleScreen
@@ -33,6 +34,7 @@ sealed class Screen(val route: String){
     object AddScheduleScreen : Screen("add")
     object SelectScheduleScreen : Screen("select")
     object EditScheduleScreen : Screen("edit")
+    object CompleteScheduleScreen : Screen("complete")
 }
 
 @Composable
@@ -52,6 +54,9 @@ fun MyApp(){
         }
         composable(Screen.EditScheduleScreen.route) {
             EditScheduleScreen(navController = navController, viewModel = viewModel)
+        }
+        composable(Screen.CompleteScheduleScreen.route){
+            CompleteScheduleScreen(navController, viewModel = viewModel)
         }
     }
 }
