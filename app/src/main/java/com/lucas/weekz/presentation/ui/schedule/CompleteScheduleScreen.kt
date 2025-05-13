@@ -62,14 +62,14 @@ fun CompleteScheduleScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "일정 추가 중...",
+                    text = "일정 추가 완료",
                     style = Typography.bodyLarge,
                     color = uiColor,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "Google Calender에 추가중",
+                    text = "새로운 일정을 추가해보세요!",
                     style = Typography.bodyMedium,
                     color = uiColor
                 )

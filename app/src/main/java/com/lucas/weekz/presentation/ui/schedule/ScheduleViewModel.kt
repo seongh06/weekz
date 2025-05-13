@@ -95,11 +95,12 @@ class ScheduleViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 val generativeModel = GenerativeModel(
-                    modelName = "gemini-2.5-pro-exp-03-25", // 또는 현재 유효한 다른 모델 이름
+                    modelName = "gemini-1.5-flash", // 또는 현재 유효한 다른 모델 이름
                     apiKey = apiKey
                 )
 
-                val prompt = "${scheduleText}\n 해당 공지사항을 캘린더에 넣을거라서 title, date, time, location, memo 로 각각 한줄로 정리해줘. time은 00:00 형식으로 넘겨주고 날짜도 2025.00.00, 장소는 도로명으로 넘겨줘. 메모는 최대 20글자로" // 사용자 입력 텍스트 + 프롬프트 추가
+                val prompt = "${scheduleText}\n 해당 공지사항을 캘린더에 넣을거라서 title, date, time, location, memo 로 각각 한줄로 정리해줘. time은 00:00 형식으로 넘겨주고 날짜도 2025.00.00, 장소는 도로명으로 넘겨줘. 메모는 최대 20글자로 해주세요. 그리고 형식은 title: 제목 date: 날짜 time: 00:00 location: 장소 memo: 메모 이런식으로 해줘" +
+                        "" // 사용자 입력 텍스트 + 프롬프트 추가
 
                 val response = generativeModel.generateContent(prompt)
 

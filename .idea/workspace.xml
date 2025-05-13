@@ -9,10 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26539dd8-bfd9-489c-b4c9-d12d73d99192" name="Changes" comment="[feat] GEMINI 일정 편집view로 넘어가기 성공~!!">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/EditScheduleScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/EditScheduleScreen.kt" afterDir="false" />
-    </list>
+    <list default="true" id="26539dd8-bfd9-489c-b4c9-d12d73d99192" name="Changes" comment="[feat] 캘린더를 열어서 저장" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -24,7 +21,7 @@
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=R3CY20NB4DN)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -236,7 +233,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747147591572</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="[feat] 캘린더를 열어서 저장">
+      <option name="closed" value="true" />
+      <created>1747150474690</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1747150474691</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -247,7 +252,8 @@
     <MESSAGE value="[feat] View 제작 완료" />
     <MESSAGE value="[feat] GEMINI 연결 완료" />
     <MESSAGE value="[feat] GEMINI 일정 편집view로 넘어가기 성공~!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="[feat] GEMINI 일정 편집view로 넘어가기 성공~!!" />
+    <MESSAGE value="[feat] 캘린더를 열어서 저장" />
+    <option name="LAST_COMMIT_MESSAGE" value="[feat] 캘린더를 열어서 저장" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
