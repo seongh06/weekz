@@ -9,55 +9,9 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26539dd8-bfd9-489c-b4c9-d12d73d99192" name="Changes" comment="[feat] GEMINI 연결 완료">
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/checksums.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/md5-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/checksums/sha1-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileChanges/last-build.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/8.11.1/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/checksums.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/md5-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/sha1-checksums.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/executionHistory/executionHistory.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/executionHistory/executionHistory.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileChanges/last-build.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/fileHashes.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/fileHashes.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/cache.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/config.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gradle/vcs-1/gc.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/caches/deviceStreaming.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/kotlinc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/data/dto/GeminiDto.kt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/di/AppModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/di/AppModule.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/component/SelectScheduleCard.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/component/SelectScheduleCard.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/main/MainActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/main/MainActivity.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/AddScheduleScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/AddScheduleScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/ScheduleViewModel.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/ScheduleViewModel.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/SelectScheduleScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/SelectScheduleScreen.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/libs.versions.toml" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/libs.versions.toml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" afterDir="false" />
+    <list default="true" id="26539dd8-bfd9-489c-b4c9-d12d73d99192" name="Changes" comment="[feat] GEMINI 일정 편집view로 넘어가기 성공~!!">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/EditScheduleScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/EditScheduleScreen.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +24,7 @@
   <component name="CodeInsightWorkspaceSettings">
     <option name="optimizeImportsOnTheFly" value="true" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=R3CY20NB4DN)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -274,7 +228,15 @@
       <option name="project" value="LOCAL" />
       <updated>1746210324008</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="[feat] GEMINI 일정 편집view로 넘어가기 성공~!!">
+      <option name="closed" value="true" />
+      <created>1747147591571</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1747147591572</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -284,7 +246,8 @@
     <MESSAGE value="[feat] 일정 수정 된다 tlqkf" />
     <MESSAGE value="[feat] View 제작 완료" />
     <MESSAGE value="[feat] GEMINI 연결 완료" />
-    <option name="LAST_COMMIT_MESSAGE" value="[feat] GEMINI 연결 완료" />
+    <MESSAGE value="[feat] GEMINI 일정 편집view로 넘어가기 성공~!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="[feat] GEMINI 일정 편집view로 넘어가기 성공~!!" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
