@@ -18,19 +18,18 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.lucas.weekz.R
 import com.lucas.weekz.presentation.component.SelectScheduleCard
 import com.lucas.weekz.presentation.theme.Black
-import com.lucas.weekz.presentation.theme.ThemedApp
 import com.lucas.weekz.presentation.theme.Typography
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -45,6 +44,9 @@ fun SelectScheduleScreen(
     } else {
         R.drawable.img_small_white_1
     }
+    // ViewModel의 상태를 remember와 by 델리게이트로 observe합니다.
+    val isLoading by remember { viewModel.isLoading }
+    val apiCallSuccess by remember { viewModel.apiCallSuccess }
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -104,12 +106,23 @@ fun SelectScheduleScreen(
                 verticalArrangement = Arrangement.spacedBy(30.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                if (viewModel.scheduleList.isNotEmpty()) {
+                // API 호출 로딩 중이거나 실패 상태일 때 Shimmer 플레이스홀더 표시
+                if (isLoading || !apiCallSuccess) {
+                    items(5) { // Shimmer 플레이스홀더를 표시할 항목 수 (예: 5개)
+                        SelectScheduleCard(
+                            scheduleData = null, // 데이터는 null로 전달
+                            onClick = {}, // 클릭은 비활성화되므로 빈 람다 전달
+                            isLoading = isLoading,
+                            apiCallSuccess = apiCallSuccess
+                        )
+                    }
+                } else if (viewModel.scheduleList.isNotEmpty()) {
+                    // 데이터 로딩이 완료되고 성공했으며, 리스트에 항목이 있을 때 실제 데이터 표시
                     items(
-                        count = viewModel.scheduleList.size, // 변경
-                        key = { index -> viewModel.scheduleList[index].id } //key 파라미터 추가
+                        count = viewModel.scheduleList.size,
+                        key = { index -> viewModel.scheduleList[index].id }
                     ) { index ->
-                        val scheduleData = viewModel.scheduleList[index] // 변경
+                        val scheduleData = viewModel.scheduleList[index]
                         Log.d("SelectScheduleScreen", "scheduleData: $scheduleData")
                         SelectScheduleCard(
                             scheduleData = scheduleData,
@@ -126,25 +139,18 @@ fun SelectScheduleScreen(
                                 } else {
                                     Log.e("SelectScheduleScreen", "scheduleData is null!")
                                 }
-                            }
+                            },
+                            isLoading = isLoading, // 로딩 상태 전달
+                            apiCallSuccess = apiCallSuccess // API 호출 상태 전달
                         )
                     }
                 } else {
-                    // scheduleList가 비어 있을 때 보여줄 내용
+                    // scheduleList가 비어 있고, 로딩 중이 아니며, API 호출 성공 상태일 때
                     item {
                         Text(text = "일정이 없습니다.", color = uiColor)
                     }
                 }
             }
         }
-    }
-}
-
-
-@Preview(showBackground = true)
-@Composable
-fun SelectScheduleScreenPreview() {
-    ThemedApp {
-        SelectScheduleScreen(navController = null, viewModel = hiltViewModel())
     }
 }

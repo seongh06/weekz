@@ -27,6 +27,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -36,24 +37,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import com.lucas.weekz.R
 import com.lucas.weekz.presentation.theme.Black
-import com.lucas.weekz.presentation.theme.ThemedApp
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.ui.main.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddScheduleScreen(navController: NavHostController?) {
+fun AddScheduleScreen(navController: NavHostController?, viewModel: ScheduleViewModel) {
     val context = LocalContext.current
     val uiColor = if (isSystemInDarkTheme()) Color.White else Black
     var updateDate by remember { mutableStateOf("04.25") }
     var scheduleText by remember { mutableStateOf("") }
+    var geminiResponse by remember { mutableStateOf("") } // Gemini 응답을 저장할 상태 변수
+    val coroutineScope = rememberCoroutineScope() // 비동기 처리를 위한 CoroutineScope
 
     Scaffold(modifier = Modifier.fillMaxSize(),containerColor = Color.Transparent) { innerPadding ->
         Column(
@@ -140,6 +140,8 @@ fun AddScheduleScreen(navController: NavHostController?) {
                             contentAlignment = Alignment.Center
                         ) {
                             IconButton(onClick = {
+                                Log.d("SendButton", "Send button clicked!")
+                                viewModel.generateScheduleSummary(scheduleText)
                                 navController?.navigate(Screen.SelectScheduleScreen.route)
                             }) {
                                 Image(
@@ -159,13 +161,5 @@ fun AddScheduleScreen(navController: NavHostController?) {
                     .background(Color.Transparent)
             )
         }
-    }
-}
-
-@Preview
-@Composable
-fun AddScheduleScreenPreview() {
-    ThemedApp {
-        AddScheduleScreen(navController = rememberNavController())
     }
 }

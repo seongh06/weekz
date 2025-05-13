@@ -47,7 +47,7 @@ fun MyApp(){
             MainScreen(navController = navController)
         }
         composable(Screen.AddScheduleScreen.route) {
-            AddScheduleScreen(navController = navController)
+            AddScheduleScreen(navController = navController, viewModel = viewModel)
         }
         composable(Screen.SelectScheduleScreen.route) {
             SelectScheduleScreen(navController = navController, viewModel = viewModel)

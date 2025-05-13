@@ -1,10 +1,11 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt.android) 
+    alias(libs.plugins.hilt.android)
 }
-
 
 android {
     namespace = "com.lucas.weekz"
@@ -17,11 +18,25 @@ android {
         versionCode = 1
         versionName = "1.0"
 
-
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
+        }
+        val properties = Properties()
+        val propertiesFile = project.rootProject.file("local.properties")
+
+        if (propertiesFile.exists()) {
+            properties.load(propertiesFile.inputStream())
+        } else {
+            throw GradleException("local.properties file not found")
+        }
+
+        val apiKey = properties.getProperty("API_KEY") as String?
+
+        if (apiKey.isNullOrEmpty()) {
+            throw GradleException("API key not found in local.properties. Please add API_KEY=YOUR_API_KEY.")
+        } else {
+            buildConfigField("String", "apiKey", "\"$apiKey\"")
         }
     }
 
@@ -34,15 +49,12 @@ android {
             )
         }
     }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
     kotlinOptions {
         jvmTarget = "17"
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.5.1"
@@ -52,6 +64,10 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+}
+// Configure Kotlin JVM toolchain here
+kotlin {
+    jvmToolchain(17) // Configure the JVM toolchain within the kotlin block
 }
 
 dependencies {
@@ -64,6 +80,7 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
+    implementation(libs.generativeai)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -84,4 +101,9 @@ dependencies {
 
     implementation(libs.androidx.lifecycle.viewmodel.compose)
 
+    implementation("androidx.compose.runtime:runtime-android:1.8.0") // Use your current Compose version
+
+    implementation("com.google.accompanist:accompanist-placeholder:0.34.0") // 최신 버전 확인하여 사용
+    implementation("com.google.accompanist:accompanist-placeholder-material:0.34.0") // Material Design 스타일 Shimmer 사용 시 추가
+    implementation("com.google.accompanist:accompanist-placeholder-material3:0.34.0") // Material3 스타일 Shimmer 사용 시 추가
 }
