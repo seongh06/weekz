@@ -56,7 +56,7 @@ fun SelectScheduleCard(
         Column {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "제목",
+                    text = "Title",
                     color = Black,
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
@@ -87,7 +87,7 @@ fun SelectScheduleCard(
             Spacer(modifier = Modifier.height(10.dp)) // height로 변경
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "날짜",
+                    text = "Date",
                     color = Black,
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
@@ -118,7 +118,7 @@ fun SelectScheduleCard(
             Spacer(modifier = Modifier.height(10.dp)) // height로 변경
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "시간",
+                    text = "Time",
                     color = Black,
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
@@ -149,7 +149,7 @@ fun SelectScheduleCard(
             Spacer(modifier = Modifier.height(10.dp)) // height로 변경
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "장소",
+                    text = "Location",
                     color = Black,
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
@@ -180,7 +180,7 @@ fun SelectScheduleCard(
             Spacer(modifier = Modifier.height(10.dp)) // height로 변경
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "메모",
+                    text = "Memo",
                     color = Black,
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,

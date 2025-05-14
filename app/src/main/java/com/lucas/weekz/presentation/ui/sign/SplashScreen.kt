@@ -1,8 +1,5 @@
 package com.lucas.weekz.presentation.ui.sign
-
-import android.app.Activity
 import android.content.Context
-import android.content.Intent
 import android.preference.PreferenceManager
 import android.util.Log
 import androidx.compose.foundation.Image
@@ -17,12 +14,18 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -33,14 +36,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.lucas.weekz.R
 import com.lucas.weekz.presentation.theme.Black
 import com.lucas.weekz.presentation.theme.LocalAppTheme
-import com.lucas.weekz.presentation.theme.ThemedApp
 import com.lucas.weekz.presentation.theme.Typography
-import com.lucas.weekz.presentation.ui.main.MainActivity
 
 
 // SharedPreferences에 언어 코드를 저장하는 키
@@ -80,14 +81,18 @@ enum class AppLanguage(val code: String) {
         }
     }
 }
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SplashScreen(activity: Activity? = null) { // Activity를 인자로 받도록 수정
+fun SplashScreen(navController: NavHostController? = null,
+        onBoxClick: () -> Unit, onSettingsClick: () -> Unit // 설정 아이콘 클릭 시 실행될 람다 함수 파라미터 추가
+) { // Activity를 인자로 받도록 수정
     val context = LocalContext.current
     val currentTheme = LocalAppTheme.current
 
-    LaunchedEffect(key1 = true){
-        Log.d("SplashScreen",currentTheme.toString())
+    val coroutineScope = rememberCoroutineScope()
+
+    LaunchedEffect(key1 = true) {
+        Log.d("SplashScreen", currentTheme.toString())
     }
 
     var currentLanguage by remember {
@@ -110,74 +115,95 @@ fun SplashScreen(activity: Activity? = null) { // Activity를 인자로 받도�
     } else {
         R.drawable.img_big_white
     }
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .clickable { // Box 전체에 클릭 가능 모디파이어 추가
-                // 클릭 시 MainActivity로 이동
-                val intent = Intent(context, MainActivity::class.java)
-                activity?.startActivity(intent)
-                activity?.finish() // 현재 액티비티 종료
-            }
-    ) {
-        val uiColor = if (isSystemInDarkTheme()) Color.White else Black
-        Column(modifier = Modifier.fillMaxSize()){
-            Text(
-                text = stringResource(id = currentLanguage.getSplashTitleResourceId()),
-                color = uiColor,
-                style = Typography.displayLarge,
-                modifier = Modifier
-                    .padding(start = 30.dp, top = 100.dp)
-            )
-            Spacer(Modifier.weight(1f))
-            Image(
-                painter = painterResource(id = bigImage),
-                contentDescription = "캐릭터 이미지",
-                modifier = Modifier
-                    .size(341.dp, 400.dp)
-                    .align(Alignment.End)
-            )
-        }
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-                .padding(30.dp),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
-        ) {
-            Image(
-                imageVector = ImageVector.vectorResource(id = R.drawable.ic_language), // 변경
-                contentDescription = "언어 아이콘",
-                modifier = Modifier.size(24.dp),
-                colorFilter = ColorFilter.tint(uiColor)
-            )
-            Spacer(modifier = Modifier.height(10.dp))
-            Text(
-                text = stringResource(id = AppLanguage.ENGLISH.getLanguageTextResourceId()), // 항상 English 텍스트 표시
-                color = uiColor, // <- uiColor 적용
-                style = Typography.displaySmall,
-                modifier = Modifier.clickable {
-                    currentLanguage = AppLanguage.ENGLISH // 언어 상태만 변경
-                }
-            )
-            Spacer(modifier = Modifier.height(5.dp))
-            Text(
-                text = stringResource(id = AppLanguage.KOREAN.getLanguageTextResourceId()), // 항상 한국어 텍스트 표시
-                color = uiColor, // <- uiColor 적용
-                style = Typography.displaySmall,
-                modifier = Modifier.clickable {
-                    currentLanguage = AppLanguage.KOREAN // 언어 상태만 변경
-                }
-            )
-        }
-    }
-}
 
-@Preview(showBackground = true)
-@Composable
-fun SplashActivityPreview() {
-    ThemedApp {
-        SplashScreen()
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        containerColor = Color.Transparent, // 배경 투명 설정
+        topBar = {
+            TopAppBar(
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color.Transparent, // TopAppBar 배경 투명
+                ),
+                title = {
+                    // Splash 화면의 타이틀 텍스트 (필요시 여기에 추가)
+                    // Text("Splash Screen", color = uiColor)
+                },
+                actions = {
+                    // 설정 아이콘 버튼
+                    IconButton(onClick = {
+                        onSettingsClick()
+                    }) {
+                        // 설정 아이콘
+                        Image(
+                            painter = painterResource(id = R.drawable.ic_setting), // 설정 아이콘 리소스
+                            contentDescription = "설정", // 접근성 설명
+                            colorFilter = ColorFilter.tint(if (isSystemInDarkTheme()) Color.White else Black), // 테마에 따라 아이콘 색상 변경
+                            modifier = Modifier.size(24.dp)
+                        )
+                    }
+                }
+            )
+        }
+    ) { innerPadding ->
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .clickable { // Box 전체에 클릭 가능 모디파이어
+                    onBoxClick() // 클릭 시 전달받은 람다 함수 호출
+                }
+        ) {
+            val uiColor = if (isSystemInDarkTheme()) Color.White else Black
+            Column(modifier = Modifier.fillMaxSize()) {
+                Text(
+                    text = stringResource(id = currentLanguage.getSplashTitleResourceId()),
+                    color = uiColor,
+                    style = Typography.displayLarge,
+                    modifier = Modifier
+                        .padding(start = 30.dp, top = 80.dp)
+                )
+                Spacer(Modifier.weight(1f))
+                Image(
+                    painter = painterResource(id = bigImage),
+                    contentDescription = "캐릭터 이미지",
+                    modifier = Modifier
+                        .size(341.dp, 400.dp)
+                        .align(Alignment.End)
+                )
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .padding(30.dp),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.Center
+            ) {
+                Image(
+                    imageVector = ImageVector.vectorResource(id = R.drawable.ic_language), // 변경
+                    contentDescription = "언어 아이콘",
+                    modifier = Modifier.size(24.dp),
+                    colorFilter = ColorFilter.tint(uiColor)
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                Text(
+                    text = stringResource(id = AppLanguage.ENGLISH.getLanguageTextResourceId()), // 항상 English 텍스트 표시
+                    color = uiColor, // <- uiColor 적용
+                    style = Typography.displaySmall,
+                    modifier = Modifier.clickable {
+                        currentLanguage = AppLanguage.ENGLISH // 언어 상태만 변경
+                    }
+                )
+                Spacer(modifier = Modifier.height(5.dp))
+                Text(
+                    text = stringResource(id = AppLanguage.KOREAN.getLanguageTextResourceId()), // 항상 한국어 텍스트 표시
+                    color = uiColor, // <- uiColor 적용
+                    style = Typography.displaySmall,
+                    modifier = Modifier.clickable {
+                        currentLanguage = AppLanguage.KOREAN // 언어 상태만 변경
+                    }
+                )
+            }
+        }
     }
 }

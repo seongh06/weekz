@@ -8,7 +8,7 @@
 
     <!-- 언어 설정에 따른 텍스트 구별-->
     <string name="splash_title_korean">공지사항을\n캘린더에 쏙!\n내 손안의\nAI 비서</string>
-    <string name="splash_title_english">Notice on your\ncalendar!\nAI Assistant\nin your hand</string>
+    <string name="splash_title_english">Notice\nto calendar!\nYour Pocket\nAI assistant</string>
 
     <string name="add_schedule_title_korean">공지사항을\n적어주세요</string>
     <string name="add_schedule_title_english">Hello, Ask Me\nyour Notice</string>
@@ -19,6 +19,9 @@
 
     <string name="select_schedule_title_korean">일정 선택</string>
     <string name="select_schedule_title_english">Select Schedule</string>
+
+    <string name="select_theme_title_korean">테마 선택</string>
+    <string name="select_theme_title_english">Select Theme</string>
 
     <string name="edit_schedule_title_korean">일정 편집</string>
     <string name="edit_schedule_title_english">Edit Schedule</string>

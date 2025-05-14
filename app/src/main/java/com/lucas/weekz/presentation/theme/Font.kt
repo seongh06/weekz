@@ -20,6 +20,12 @@ val Typography = Typography(
         fontSize = 52.sp,
         lineHeight = 60.sp
     ),
+    displayMedium = TextStyle(
+      fontFamily = Pretendard,
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
+        lineHeight = 28.sp
+    ),
     displaySmall = TextStyle(
         fontFamily = Pretendard,
         fontWeight = FontWeight.Bold,
