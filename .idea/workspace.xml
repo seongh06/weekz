@@ -9,7 +9,41 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="26539dd8-bfd9-489c-b4c9-d12d73d99192" name="Changes" comment="[feat] 캘린더를 열어서 저장" />
+    <list default="true" id="26539dd8-bfd9-489c-b4c9-d12d73d99192" name="Changes" comment="[feat] 언어 설정 가능하게 수정, splashActivity를 임시로 언어 설정 화면으로 변경">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/checksums.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/checksums.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/md5-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/md5-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/sha1-checksums.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/checksums/sha1-checksums.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0-milestone-7/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0-milestone-7/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/9.0-milestone-7/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle.kts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/AddScheduleScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/AddScheduleScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/CompleteScheduleScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/CompleteScheduleScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/EditScheduleScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/EditScheduleScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/SelectScheduleScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/schedule/SelectScheduleScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/sign/SplashActivity.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/sign/SplashActivity.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/sign/SplashScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/lucas/weekz/presentation/ui/sign/SplashScreen.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_5.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_dark_5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_light_1.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_light_1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_light_2.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_light_2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_light_3.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_light_3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/drawable/bg_light_4.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/drawable/bg_light_4.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/settings.gradle.kts" beforeDir="false" afterPath="$PROJECT_DIR$/settings.gradle.kts" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -35,6 +69,11 @@
         <option value="Kotlin Class" />
       </list>
     </option>
+  </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="C:\project\my-upload-key.keystore" />
+    <option name="KEY_ALIAS" value="upload" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -69,6 +108,11 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Android App.app.executor&quot;: &quot;Run&quot;,
+    &quot;ApkExportedModule&quot;: &quot;Weekz.app&quot;,
+    &quot;BundleExportedModule&quot;: &quot;Weekz.app&quot;,
+    &quot;ExportApk.ApkPathForWeekz.app&quot;: &quot;C:\\project\\weekz\\app&quot;,
+    &quot;ExportApk.ApkPathForweekz.app&quot;: &quot;C:\\project\\weekz\\app&quot;,
+    &quot;ExportBundle.BundlePathForWeekz.app&quot;: &quot;C:\\project\\weekz\\app&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
@@ -78,11 +122,16 @@
     &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;main&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/project/weekz/app/src/main/java/com/lucas/weekz/presentation/ui/schedule&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/project/my-upload-key.keystore&quot;,
     &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.17&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;ExportApk.BuildVariants&quot;: [
+      &quot;release&quot;
+    ]
   }
 }</component>
   <component name="RecentsManager">
@@ -104,7 +153,7 @@
   </component>
   <component name="RunManager">
     <configuration name="app" type="AndroidRunConfigurationType" factoryName="Android App" activateToolWindowBeforeRun="false">
-      <module name="weekz.app" />
+      <module name="Weekz.app" />
       <option name="ANDROID_RUN_CONFIGURATION_SCHEMA_VERSION" value="1" />
       <option name="DEPLOY" value="true" />
       <option name="DEPLOY_APK_FROM_BUNDLE" value="false" />
@@ -241,7 +290,15 @@
       <option name="project" value="LOCAL" />
       <updated>1747150474691</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="[feat] gemini 1.5 flash 로 수정">
+      <option name="closed" value="true" />
+      <created>1747151201640</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1747151201641</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -253,19 +310,21 @@
     <MESSAGE value="[feat] GEMINI 연결 완료" />
     <MESSAGE value="[feat] GEMINI 일정 편집view로 넘어가기 성공~!!" />
     <MESSAGE value="[feat] 캘린더를 열어서 저장" />
-    <option name="LAST_COMMIT_MESSAGE" value="[feat] 캘린더를 열어서 저장" />
+    <MESSAGE value="[feat] gemini 1.5 flash 로 수정" />
+    <MESSAGE value="[feat] 언어 설정 가능하게 수정, splashActivity를 임시로 언어 설정 화면으로 변경" />
+    <option name="LAST_COMMIT_MESSAGE" value="[feat] 언어 설정 가능하게 수정, splashActivity를 임시로 언어 설정 화면으로 변경" />
   </component>
   <component name="play_dynamic_filters_status">
     <option name="appIdToCheckInfo">
       <map>
         <entry key="com.lucas.weekz">
           <value>
-            <CheckInfo lastCheckTimestamp="1747069981256" />
+            <CheckInfo lastCheckTimestamp="1747161707535" />
           </value>
         </entry>
         <entry key="com.lucas.weekz.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1747069981254" />
+            <CheckInfo lastCheckTimestamp="1747161707533" />
           </value>
         </entry>
       </map>

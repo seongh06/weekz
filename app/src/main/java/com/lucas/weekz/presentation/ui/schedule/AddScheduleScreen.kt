@@ -1,6 +1,8 @@
 package com.lucas.weekz.presentation.ui.schedule
 
+import android.app.Activity
 import android.util.Log
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -35,6 +37,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -44,17 +47,39 @@ import com.lucas.weekz.R
 import com.lucas.weekz.presentation.theme.Black
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.ui.main.Screen
+import com.lucas.weekz.presentation.ui.sign.AppLanguage
+import com.lucas.weekz.presentation.ui.sign.getSavedLanguageCode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddScheduleScreen(navController: NavHostController?, viewModel: ScheduleViewModel) {
     val context = LocalContext.current
+    val activity = (LocalContext.current as? Activity) // Activity 캐스팅
     val uiColor = if (isSystemInDarkTheme()) Color.White else Black
     var updateDate by remember { mutableStateOf("04.25") }
     var scheduleText by remember { mutableStateOf("") }
     var geminiResponse by remember { mutableStateOf("") } // Gemini 응답을 저장할 상태 변수
     val coroutineScope = rememberCoroutineScope() // 비동기 처리를 위한 CoroutineScope
 
+    // 현재 언어 설정 가져오기
+    val currentLanguage = remember {
+        when (getSavedLanguageCode(context)) {
+            "en" -> AppLanguage.ENGLISH
+            else -> AppLanguage.KOREAN
+        }
+    }
+
+    // 시스템 뒤로가기 버튼 처리를 위한 BackHandler
+    BackHandler {
+        // 시스템 뒤로가기 버튼이 눌렸을 때 실행될 로직
+        Log.d("BackHandler", "System back button pressed in AddScheduleScreen")
+        activity?.finish() // 액티비티 종료
+    }
+    // scheduleText가 비어있거나 공백만 있는지 확인하는 상태 변수
+    val isSendButtonEnabled = remember(scheduleText) {
+        scheduleText.isNotBlank() // 공백만 있는 경우도 비활성화하려면 isNotBlank() 사용
+        // scheduleText.isNotEmpty() // 비어있는 경우만 비활성화하려면 isNotEmpty() 사용
+    }
     Scaffold(modifier = Modifier.fillMaxSize(),containerColor = Color.Transparent) { innerPadding ->
         Column(
             modifier = Modifier
@@ -68,18 +93,31 @@ fun AddScheduleScreen(navController: NavHostController?, viewModel: ScheduleView
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Text(
-                        text = "공지사항을\n적어주세요",
-                        style = Typography.bodyLarge,
-                        color = uiColor,
-                        textAlign = TextAlign.Center
+                Text(
+                    text = stringResource(
+                        id = when (currentLanguage) {
+                            AppLanguage.KOREAN -> R.string.add_schedule_title_korean
+                            AppLanguage.ENGLISH -> R.string.add_schedule_title_english
+                        }
+                    ),
+                    style = Typography.bodyLarge,
+                    color = uiColor,
+                    textAlign = TextAlign.Center
+                )
+                Spacer(modifier = Modifier.height(10.dp))
+                // 마지막 업데이트 텍스트: "마지막 업데이트" 부분만 리소스 로드, 날짜는 고정 또는 동적 처리
+                Text(
+                    text = "${
+                        stringResource(
+                        id = when (currentLanguage) {
+                            AppLanguage.KOREAN -> R.string.add_schedule_last_update_korean
+                            AppLanguage.ENGLISH -> R.string.add_schedule_last_update_english
+                        }
                     )
-                    Spacer(modifier = Modifier.height(10.dp))
-                    Text(
-                        text = "마지막 업데이트 $updateDate",
-                        style = Typography.bodyMedium,
-                        color = uiColor
-                    )
+                    } $updateDate", // 날짜는 예시로 하드코딩
+                    style = Typography.bodyMedium,
+                    color = uiColor
+                )
             }
             Spacer(modifier = Modifier.weight(1f))
             // 하단 부분 (텍스트 필드, 보내기 버튼)
@@ -110,7 +148,14 @@ fun AddScheduleScreen(navController: NavHostController?, viewModel: ScheduleView
                                 value = scheduleText,
                                 onValueChange = { scheduleText = it },
                                 modifier = Modifier.fillMaxWidth(),
-                                placeholder = { Text("일정을 작성해주세요") },
+                                placeholder = {
+                                    Text(stringResource(
+                                        id = when (currentLanguage) {
+                                            AppLanguage.KOREAN -> R.string.add_schedule_placeholder_korean
+                                            AppLanguage.ENGLISH -> R.string.add_schedule_placeholder_english
+                                        }
+                                    ))
+                                },
                                 shape = RoundedCornerShape(32.dp),
                                 colors = OutlinedTextFieldDefaults.colors(
                                     focusedContainerColor = Color.Transparent,
@@ -126,6 +171,8 @@ fun AddScheduleScreen(navController: NavHostController?, viewModel: ScheduleView
                                 )
                             )
                         }
+
+                        // 보내기 버튼
                         Box(
                             modifier = Modifier
                                 .background(
@@ -134,20 +181,29 @@ fun AddScheduleScreen(navController: NavHostController?, viewModel: ScheduleView
                                 )
                                 .padding(13.dp)
                                 .size(30.dp)
-                                .clickable {
-                                    Log.d("SendButton", "Send button clicked!")
-                                },
+                                // Box에 직접 clickable을 사용하는 대신 IconButton의 enabled 속성을 사용합니다.
+                                // .clickable { Log.d("SendButton", "Send button clicked!") }
+                                .then(
+                                    // 버튼 비활성화 시 클릭 이벤트를 막습니다.
+                                    if (isSendButtonEnabled) Modifier else Modifier.clickable(
+                                        enabled = false
+                                    ) {}
+                                ),
                             contentAlignment = Alignment.Center
                         ) {
-                            IconButton(onClick = {
-                                Log.d("SendButton", "Send button clicked!")
-                                viewModel.generateScheduleSummary(scheduleText)
-                                navController?.navigate(Screen.SelectScheduleScreen.route)
-                            }) {
+                            IconButton(
+                                onClick = {
+                                    Log.d("SendButton", "Send button clicked!")
+                                    viewModel.generateScheduleSummary(scheduleText)
+                                    navController?.navigate(Screen.SelectScheduleScreen.route)
+                                },
+                                enabled = isSendButtonEnabled // 작성된 내용이 있을 때만 활성화
+                            ) {
                                 Image(
                                     painter = painterResource(id = R.drawable.ic_send),
                                     contentDescription = "보내기",
-                                    colorFilter = ColorFilter.tint(Color.Black)
+                                    // 버튼 비활성화 시 아이콘 색상 변경 (선택 사항)
+                                    colorFilter = ColorFilter.tint(if (isSendButtonEnabled) Color.Black else Color.Gray)
                                 )
                             }
                         }

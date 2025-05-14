@@ -32,8 +32,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.core.net.ParseException
 import androidx.navigation.NavHostController
 import com.lucas.weekz.R
 import com.lucas.weekz.presentation.component.EditScheduleCard
@@ -41,6 +41,9 @@ import com.lucas.weekz.presentation.theme.Black
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.theme.White
 import com.lucas.weekz.presentation.ui.main.Screen
+import com.lucas.weekz.presentation.ui.sign.AppLanguage
+import com.lucas.weekz.presentation.ui.sign.getSavedLanguageCode
+import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -80,6 +83,15 @@ fun EditScheduleScreen(
     Log.d("EditScheduleScreen", "selectSchedule : $selectSchedule")
 
     val uiColor = if (isSystemInDarkTheme()) Color.White else Black
+
+    // 현재 언어 설정 가져오기
+    val currentLanguage = remember {
+        when (getSavedLanguageCode(context)) {
+            "en" -> AppLanguage.ENGLISH
+            else -> AppLanguage.KOREAN
+        }
+    }
+
     val smallImage = if (isSystemInDarkTheme()) {
         R.drawable.img_small_black_1
     } else {
@@ -140,7 +152,12 @@ fun EditScheduleScreen(
                             .size(50.dp, 50.dp)
                     )
                     Text(
-                        text = "일정 편집",
+                        text = stringResource(
+                            id = when (currentLanguage) {
+                                AppLanguage.KOREAN -> R.string.edit_schedule_title_korean
+                                AppLanguage.ENGLISH -> R.string.edit_schedule_title_english
+                            }
+                        ),
                         color = uiColor,
                         modifier = Modifier.padding(top = 20.dp),
                         style = Typography.bodyLarge
@@ -216,7 +233,12 @@ fun EditScheduleScreen(
                     shape = RoundedCornerShape(999.dp)
                 ) {
                     Text(
-                        text = "확정",
+                        text = stringResource(
+                            id = when (currentLanguage) {
+                                AppLanguage.KOREAN -> R.string.edit_schedule_confirm_button_korean
+                                AppLanguage.ENGLISH -> R.string.edit_schedule_confirm_button_english
+                            }
+                        ),
                         color = Black,
                         style = Typography.bodyMedium
                     )

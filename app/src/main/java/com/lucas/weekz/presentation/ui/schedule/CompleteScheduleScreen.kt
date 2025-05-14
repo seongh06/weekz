@@ -1,5 +1,6 @@
 package com.lucas.weekz.presentation.ui.schedule
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -15,10 +16,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
@@ -31,6 +35,8 @@ import com.lucas.weekz.presentation.theme.Gray
 import com.lucas.weekz.presentation.theme.ThemedApp
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.ui.main.Screen
+import com.lucas.weekz.presentation.ui.sign.AppLanguage
+import com.lucas.weekz.presentation.ui.sign.getSavedLanguageCode
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -38,7 +44,19 @@ fun CompleteScheduleScreen(
     navController: NavHostController?,
     viewModel: ScheduleViewModel
 ) {
+    BackHandler {
+        // 시스템 뒤로가기 버튼이 눌렸을 때 아무것도 하지 않음
+    }
+
     val uiColor = if (isSystemInDarkTheme()) Color.White else Black
+    val context = LocalContext.current
+    // 현재 언어 설정 가져오기
+    val currentLanguage = remember {
+        when (getSavedLanguageCode(context)) {
+            "en" -> AppLanguage.ENGLISH
+            else -> AppLanguage.KOREAN
+        }
+    }
     val mediumImage = if (isSystemInDarkTheme()) {
         R.drawable.img_medium_black_1
     } else {
@@ -62,14 +80,23 @@ fun CompleteScheduleScreen(
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = "일정 추가 완료",
-                    style = Typography.bodyLarge,
+                    text = stringResource(
+                        id = when (currentLanguage) {
+                            AppLanguage.KOREAN -> R.string.complete_schedule_title_korean
+                            AppLanguage.ENGLISH -> R.string.complete_schedule_title_english
+                        }
+                    ),                    style = Typography.bodyLarge,
                     color = uiColor,
                     textAlign = TextAlign.Center
                 )
                 Spacer(modifier = Modifier.height(10.dp))
                 Text(
-                    text = "새로운 일정을 추가해보세요!",
+                    text = stringResource(
+                        id = when (currentLanguage) {
+                            AppLanguage.KOREAN -> R.string.complete_schedule_body_korean
+                            AppLanguage.ENGLISH -> R.string.complete_schedule_body_english
+                        }
+                    ),
                     style = Typography.bodyMedium,
                     color = uiColor
                 )
@@ -96,8 +123,12 @@ fun CompleteScheduleScreen(
                         modifier = Modifier.clickable {
                             navController?.navigate(Screen.AddScheduleScreen.route)
                         },
-                        text = "새로운 일정 생성하기",
-                        style = Typography.bodyMedium.copy(textDecoration = TextDecoration.Underline),
+                        text = stringResource(
+                            id = when (currentLanguage) {
+                                AppLanguage.KOREAN -> R.string.complete_schedule_button_korean
+                                AppLanguage.ENGLISH -> R.string.complete_schedule_button_english
+                            }
+                        ),                        style = Typography.bodyMedium.copy(textDecoration = TextDecoration.Underline),
                         color = Gray
                     )
                 }

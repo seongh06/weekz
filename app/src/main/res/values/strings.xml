@@ -3,4 +3,33 @@
     <string name="back_description">뒤로가기</string>
     <string name="my_page_description">마이페이지</string>
     <string name="error_tex">서버와 연결을 실패했습니다.</string>
+    <string name="language_english">English</string>
+    <string name="language_korean">한국어</string>
+
+    <!-- 언어 설정에 따른 텍스트 구별-->
+    <string name="splash_title_korean">공지사항을\n캘린더에 쏙!\n내 손안의\nAI 비서</string>
+    <string name="splash_title_english">Notice on your\ncalendar!\nAI Assistant\nin your hand</string>
+
+    <string name="add_schedule_title_korean">공지사항을\n적어주세요</string>
+    <string name="add_schedule_title_english">Hello, Ask Me\nyour Notice</string>
+    <string name="add_schedule_last_update_korean">마지막 업데이트</string>
+    <string name="add_schedule_last_update_english">Last update</string>
+    <string name="add_schedule_placeholder_korean">일정을 작성해주세요</string>
+    <string name="add_schedule_placeholder_english">Write your schedule</string>
+
+    <string name="select_schedule_title_korean">일정 선택</string>
+    <string name="select_schedule_title_english">Select Schedule</string>
+
+    <string name="edit_schedule_title_korean">일정 편집</string>
+    <string name="edit_schedule_title_english">Edit Schedule</string>
+    <string name="edit_schedule_confirm_button_korean">확정</string>
+    <string name="edit_schedule_confirm_button_english">Confirm</string>
+
+    <string name="complete_schedule_title_korean">일정 추가 완료</string>
+    <string name="complete_schedule_title_english">Success</string>
+    <string name="complete_schedule_body_korean">새로운 일정을 추가해보세요!</string>
+    <string name="complete_schedule_body_english">Add a new schedule!</string>
+    <string name="complete_schedule_button_korean">새로운 일정 생성하기!</string>
+    <string name="complete_schedule_button_english">new schedule</string>
+
 </resources>

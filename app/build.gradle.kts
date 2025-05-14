@@ -11,6 +11,16 @@ android {
     namespace = "com.lucas.weekz"
     compileSdk = 36
 
+
+    val properties = Properties()
+    val propertiesFile = project.rootProject.file("local.properties")
+
+    if (propertiesFile.exists()) {
+        properties.load(propertiesFile.inputStream())
+    } else {
+        throw GradleException("local.properties file not found")
+    }
+
     defaultConfig {
         applicationId = "com.lucas.weekz"
         minSdk = 24
@@ -22,15 +32,6 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        val properties = Properties()
-        val propertiesFile = project.rootProject.file("local.properties")
-
-        if (propertiesFile.exists()) {
-            properties.load(propertiesFile.inputStream())
-        } else {
-            throw GradleException("local.properties file not found")
-        }
-
         val apiKey = properties.getProperty("API_KEY") as String?
 
         if (apiKey.isNullOrEmpty()) {
@@ -39,14 +40,34 @@ android {
             buildConfigField("String", "apiKey", "\"$apiKey\"")
         }
     }
+    signingConfigs {
+        create("release") {
+            // local.properties에서 로드한 'properties' 객체에서 서명 속성 읽어오기
+            val storeFileProp = properties.getProperty("STORE_FILE") as String?
+            val storePasswordProp = properties.getProperty("STORE_PASSWORD") as String?
+            val keyAliasProp = properties.getProperty("KEY_ALIAS") as String?
+            val keyPasswordProp = properties.getProperty("KEY_PASSWORD") as String?
 
+            if (storeFileProp.isNullOrEmpty() || storePasswordProp.isNullOrEmpty() || keyAliasProp.isNullOrEmpty() || keyPasswordProp.isNullOrEmpty()) {
+                // 속성이 local.properties에 있어야 함을 알리는 오류 메시지로 업데이트
+                throw GradleException("Signing properties not found or empty in local.properties. Please check STORE_FILE, STORE_PASSWORD, KEY_ALIAS, KEY_PASSWORD.")
+            }
+
+            storeFile = file(storeFileProp)
+            storePassword = storePasswordProp
+            keyAlias = keyAliasProp
+            keyPassword = keyPasswordProp
+        }
+    }
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isDebuggable = false
+            isMinifyEnabled = true // 코드 축소 활성화
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            signingConfig = signingConfigs.getByName("release") // 릴리스 서명 구성 적용 (필요시)
         }
     }
     kotlinOptions {
