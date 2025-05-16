@@ -3,12 +3,18 @@ package com.lucas.weekz.presentation.ui.schedule
 import android.util.Log
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.ai.client.generativeai.GenerativeModel
 import com.lucas.weekz.data.dto.ScheduleDto
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -16,7 +22,7 @@ import javax.inject.Inject
 class ScheduleViewModel @Inject constructor(
     private val apiKey: String
 ) : ViewModel() {
-    val scheduleList = mutableListOf<ScheduleDto>()
+    val scheduleList = mutableStateListOf<ScheduleDto>() // Composable에서 바로 관찰 가능
     init {
         Log.d("ScheduleViewModel", "API Key Loaded from BuildConfig: $apiKey")
     }
@@ -28,6 +34,8 @@ class ScheduleViewModel @Inject constructor(
     // API 호출 성공/실패 상태
     private val _apiCallSuccess = mutableStateOf(true) // 초기값은 true로 설정
     val apiCallSuccess: State<Boolean> = _apiCallSuccess
+    private val _scheduleListState = MutableStateFlow<List<ScheduleDto>>(emptyList())
+    val scheduleListState: StateFlow<List<ScheduleDto>> = _scheduleListState.asStateFlow()
 
     var selectSchedule: MutableState<ScheduleDto?> = mutableStateOf(null)
         private set
@@ -79,6 +87,14 @@ class ScheduleViewModel @Inject constructor(
     fun updateMemoData(newMemo: String) {
         memo.value = newMemo
     }
+    private val _userMessage = mutableStateOf<String?>(null)
+    val userMessage: State<String?> = _userMessage
+
+    fun clearUserMessage() {
+        _userMessage.value = null // 메시지를 null로 설정하여 "없음" 상태로 만듦
+    }
+    private val _navigateToFailScreen = MutableSharedFlow<String?>() // 실패 메시지를 전달할 수 있도록 String? 타입
+    val navigateToFailScreen = _navigateToFailScreen.asSharedFlow()
 
     /// Gemini API 호출 함수
     fun generateScheduleSummary(scheduleText: String) {
@@ -88,50 +104,81 @@ class ScheduleViewModel @Inject constructor(
             _apiCallSuccess.value = false // API 호출 실패 상태로 설정
             return
         }
-
-        _isLoading.value = true // 로딩 시작
-        _apiCallSuccess.value = true // 새로운 호출 시작 시 성공 상태로 재설정
+        _isLoading.value = true
+        _apiCallSuccess.value = true // 새로운 호출 시작 시 기본적으로 성공으로 가정
+        _userMessage.value = null // 이전 메시지 초기화
 
         viewModelScope.launch {
+            var isSuccessful = false // 최종 성공 여부를 판단할 변수
+            var loggableSummarizedText: String? = null // 성공 시 로그에 남길 텍스트
+
             try {
                 val generativeModel = GenerativeModel(
-                    modelName = "gemini-1.5-flash", // 또는 현재 유효한 다른 모델 이름
+                    modelName = "gemini-1.5-flash",
                     apiKey = apiKey
                 )
 
-                val prompt = "${scheduleText}\n 해당 공지사항을 캘린더에 넣을거라서 title, date, time, location, memo 로 각각 한줄로 정리해줘. time은 00:00 형식으로 넘겨주고 날짜도 2025.00.00, 장소는 도로명으로 넘겨줘. 메모는 최대 20글자로 해주세요. 그리고 형식은 title: 제목 date: 날짜 time: 00:00 location: 장소 memo: 메모 이런식으로 해줘" +
-                        "" // 사용자 입력 텍스트 + 프롬프트 추가
+                val prompt = """
+                ${scheduleText}
+                해당 공지사항을 캘린더에 넣을 거야. title, date, time, location, memo 항목으로 각각 한 줄로 정리해 줘.
+                - title: 제목 (필수)
+                - date: 날짜 (YYYY.MM.DD 형식, 예: 2025.01.15) (필수)
+                - time: 시간 (HH:MM 형식, 예: 14:30) (필수)
+                - location: 장소 (도로명 주소 또는 주요 장소명) (선택, 없으면 비워둠)
+                - memo: 메모 (최대 20자) (선택, 없으면 비워둠)
 
+                정확한 형식은 다음과 같아:
+                title: [추출된 제목]
+                date: [추출된 날짜]
+                time: [추출된 시간]
+                location: [추출된 장소]
+                memo: [추출된 메모]
+
+                만약 위 항목들, 특히 title, date, time 중 하나라도 명확하게 추출할 수 없거나, 입력 내용이 일정과 관련이 없다고 판단되면, 다른 어떤 설명도 없이 오직 "fail" 이라는 단어만 응답해 줘.
+                """.trimIndent()
+                Log.d("ScheduleViewModel", "Prompt: $prompt")
                 val response = generativeModel.generateContent(prompt)
+                val summarizedText = response.text?.trim()
 
-                val summarizedText = response.text
-                Log.d("ScheduleViewModel", "Summarized Text: $summarizedText")
-
-                val parsedSchedule = parseGeminiResponse(summarizedText)
-
-                if (parsedSchedule != null) {
-                    val newId = (scheduleList.maxByOrNull { it.id }?.id ?: 0) + 1
-                    val newSchedule = ScheduleDto(
-                        id = newId,
-                        title = parsedSchedule.title,
-                        date = parsedSchedule.date,
-                        time = parsedSchedule.time,
-                        location = parsedSchedule.location,
-                        memo = parsedSchedule.memo
-                    )
-                    scheduleList.add(newSchedule)
-                    Log.d("ScheduleViewModel", "New schedule added: $newSchedule")
-                    _apiCallSuccess.value = true // API 호출 및 파싱 성공
+                if (summarizedText.equals("fail", ignoreCase = true)) {
+                    Log.w("ScheduleViewModel", "Gemini API returned 'fail'. Input might be irrelevant or unparseable.")
+                    isSuccessful = false
+                } else if (summarizedText.isNullOrBlank()) {
+                    Log.e("ScheduleViewModel", "Gemini API returned null or blank response.")
+                    isSuccessful = false
                 } else {
-                    Log.e("ScheduleViewModel", "Failed to parse Gemini response.")
-                    _apiCallSuccess.value = false // 파싱 실패
+                    val parsedSchedule = parseGeminiResponse(summarizedText)
+                    // 파싱 성공 및 필수 필드 확인 (title, date, time)
+                    if (parsedSchedule != null &&
+                        parsedSchedule.title.isNotBlank() &&
+                        parsedSchedule.date.isNotBlank() &&
+                        parsedSchedule.time.isNotBlank()
+                    ) {
+                        loggableSummarizedText = summarizedText // 성공 시 로그에 남길 텍스트 할당
+                        isSuccessful = true
+                        viewModelScope.launch { // UI 스레드에서 상태 변경 권장
+                            val newId = scheduleList.size + 1 // Int + Int = Int
+                            scheduleList.add(parsedSchedule.copy(id = newId)) // id에 Int 할당
+                            // 또는 _scheduleListState를 사용한다면
+                            // _scheduleListState.value = _scheduleListState.value + parsedSchedule.copy(id = _scheduleListState.value.size + 1L)
+                        }
+                    } else {
+                        Log.e("ScheduleViewModel", "Failed to parse Gemini response or missing required fields. Response: $summarizedText")
+                        isSuccessful = false
+                    }
                 }
-
             } catch (e: Exception) {
-                Log.e("ScheduleViewModel", "Error calling Gemini API", e)
-                _apiCallSuccess.value = false // API 호출 자체 실패
+                Log.e("ScheduleViewModel", "Error calling Gemini API or processing response", e)
+                isSuccessful = false
             } finally {
-                _isLoading.value = false // 로딩 종료
+                _apiCallSuccess.value = isSuccessful // 최종 성공 여부 반영
+                _isLoading.value = false
+
+                if (isSuccessful && loggableSummarizedText != null) {
+                    // 성공한 경우에만 로그 출력
+                    Log.d("ScheduleViewModel", "Summarized Text: $loggableSummarizedText")
+                }
+                // 실패 로그는 각 실패 지점에서 이미 출력됨 (Log.w 또는 Log.e)
             }
         }
     }

@@ -35,4 +35,11 @@
     <string name="complete_schedule_button_korean">새로운 일정 생성하기!</string>
     <string name="complete_schedule_button_english">new schedule</string>
 
+    <string name="failed_schedule_title_korean">일정 추가 실패</string>
+    <string name="failed_schedule_title_english">Failed</string>
+    <string name="failed_schedule_body_korean">요약할 수 없는 내용입니다</string>
+    <string name="failed_schedule_body_english">This is something that cannot be summarized.</string>
+    <string name="failed_schedule_button_korean">새로운 일정 생성하기!</string>
+    <string name="failed_schedule_button_english">new schedule</string>
+
 </resources>

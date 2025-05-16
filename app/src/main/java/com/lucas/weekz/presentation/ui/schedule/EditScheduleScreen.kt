@@ -4,7 +4,6 @@ import android.content.Intent
 import android.provider.CalendarContract
 import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -38,11 +37,15 @@ import androidx.navigation.NavHostController
 import com.lucas.weekz.R
 import com.lucas.weekz.presentation.component.EditScheduleCard
 import com.lucas.weekz.presentation.theme.Black
+import com.lucas.weekz.presentation.theme.LocalAppTheme
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.theme.White
 import com.lucas.weekz.presentation.ui.main.Screen
 import com.lucas.weekz.presentation.ui.sign.AppLanguage
 import com.lucas.weekz.presentation.ui.sign.getSavedLanguageCode
+import com.lucas.weekz.presentation.utill.getMediumImageForTheme
+import com.lucas.weekz.presentation.utill.getSmallImageForTheme
+import com.lucas.weekz.presentation.utill.getUiColorForTheme
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -82,7 +85,9 @@ fun EditScheduleScreen(
     val context = LocalContext.current
     Log.d("EditScheduleScreen", "selectSchedule : $selectSchedule")
 
-    val uiColor = if (isSystemInDarkTheme()) Color.White else Black
+    val uiColor = getUiColorForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val smallImage = getSmallImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val mediumImage = getMediumImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조    val context = LocalContext.current
 
     // 현재 언어 설정 가져오기
     val currentLanguage = remember {
@@ -90,12 +95,6 @@ fun EditScheduleScreen(
             "en" -> AppLanguage.ENGLISH
             else -> AppLanguage.KOREAN
         }
-    }
-
-    val smallImage = if (isSystemInDarkTheme()) {
-        R.drawable.img_small_black_1
-    } else {
-        R.drawable.img_small_white_1
     }
     LaunchedEffect(selectSchedule) {
         if(selectSchedule != null){

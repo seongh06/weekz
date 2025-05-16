@@ -1,8 +1,6 @@
 package com.lucas.weekz.presentation.ui.schedule
 
-import android.util.Log
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -31,10 +29,13 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.lucas.weekz.R
 import com.lucas.weekz.presentation.component.SelectScheduleCard
-import com.lucas.weekz.presentation.theme.Black
+import com.lucas.weekz.presentation.theme.LocalAppTheme
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.ui.sign.AppLanguage
 import com.lucas.weekz.presentation.ui.sign.getSavedLanguageCode
+import com.lucas.weekz.presentation.utill.getMediumImageForTheme
+import com.lucas.weekz.presentation.utill.getSmallImageForTheme
+import com.lucas.weekz.presentation.utill.getUiColorForTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -42,7 +43,6 @@ fun SelectScheduleScreen(
     navController: NavHostController?,
     viewModel: ScheduleViewModel
 ) {
-    val uiColor = if (isSystemInDarkTheme()) Color.White else Black
     val context = LocalContext.current
     // 현재 언어 설정 가져오기
     val currentLanguage = remember {
@@ -51,16 +51,14 @@ fun SelectScheduleScreen(
             else -> AppLanguage.KOREAN
         }
     }
-
-    val smallImage = if (isSystemInDarkTheme()) {
-        R.drawable.img_small_black_1
-    } else {
-        R.drawable.img_small_white_1
-    }
+    val uiColor = getUiColorForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val smallImage = getSmallImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val mediumImage = getMediumImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조    val context = LocalContext.current
+    val scheduleList = viewModel.scheduleList // ViewModel에서 이 리스트가 State로 관리되어야 함
     // ViewModel의 상태를 remember와 by 델리게이트로 observe합니다.
     val isLoading by remember { viewModel.isLoading }
     val apiCallSuccess by remember { viewModel.apiCallSuccess }
-
+    val apiCallSuccessFromViewModel by remember { viewModel.apiCallSuccess } // ViewModel의 apiCallSuccess
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         containerColor = Color.Transparent,
@@ -121,52 +119,72 @@ fun SelectScheduleScreen(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(horizontal = 41.dp),
-                verticalArrangement = Arrangement.spacedBy(30.dp),
+                verticalArrangement = Arrangement.spacedBy(30.dp), // 비어있을 때는 의미 없음
                 horizontalAlignment = Alignment.CenterHorizontally,
             ) {
-                // API 호출 로딩 중이거나 실패 상태일 때 Shimmer 플레이스홀더 표시
-                if (isLoading || !apiCallSuccess) {
-                    items(5) { // Shimmer 플레이스홀더를 표시할 항목 수 (예: 5개)
+                // 조건 1: Shimmer 표시 (로딩 중이거나, ViewModel에서 API 실패 상태일 때)
+                // AddScheduleScreen에서 이미 로딩과 API 호출이 끝났다면,
+                // SelectScheduleScreen 진입 시 isLoading은 false, apiCallSuccessFromViewModel은 true/false가 명확해야 함.
+                if (isLoading) { // isLoading이 true이면 항상 Shimmer
+                    items(5) {
                         SelectScheduleCard(
-                            scheduleData = null, // 데이터는 null로 전달
-                            onClick = {}, // 클릭은 비활성화되므로 빈 람다 전달
-                            isLoading = isLoading,
-                            apiCallSuccess = apiCallSuccess
+                            scheduleData = null,
+                            onClick = {},
+                            isLoading = true, // Shimmer이므로 true
+                            apiCallSuccess = false // 로딩 중엔 성공 여부 미정
                         )
                     }
-                } else if (viewModel.scheduleList.isNotEmpty()) {
-                    // 데이터 로딩이 완료되고 성공했으며, 리스트에 항목이 있을 때 실제 데이터 표시
-                    items(
-                        count = viewModel.scheduleList.size,
-                        key = { index -> viewModel.scheduleList[index].id }
-                    ) { index ->
-                        val scheduleData = viewModel.scheduleList[index]
-                        Log.d("SelectScheduleScreen", "scheduleData: $scheduleData")
-                        SelectScheduleCard(
-                            scheduleData = scheduleData,
-                            onClick = {
-                                Log.d("SelectScheduleScreen", "SelectScheduleCard onClick triggered")
-                                Log.d("SelectScheduleScreen", "setSelectSchedule before : $scheduleData")
-                                if (scheduleData != null) {
-                                    viewModel.setSelectSchedule(scheduleData)
-                                    Log.d(
-                                        "SelectScheduleScreen",
-                                        "setSelectSchedule after : ${viewModel.selectSchedule}"
-                                    )
-                                    navController?.navigate("edit")
-                                } else {
-                                    Log.e("SelectScheduleScreen", "scheduleData is null!")
-                                }
-                            },
-                            isLoading = isLoading, // 로딩 상태 전달
-                            apiCallSuccess = apiCallSuccess // API 호출 상태 전달
-                        )
+                }
+                // 조건 2: API 호출이 완료되었고 (isLoading == false)
+                else if (apiCallSuccessFromViewModel) {
+                    // API 호출이 성공했고, 실제 데이터가 있을 때
+                    if (scheduleList.isNotEmpty()) {
+                        items(
+                            count = scheduleList.size,
+                            key = { index -> scheduleList[index].id }
+                        ) { index ->
+                            val scheduleData = scheduleList[index]
+                            SelectScheduleCard(
+                                scheduleData = scheduleData,
+                                onClick = {
+                                    if (scheduleData != null) { // scheduleData는 항상 not-null이지만 안전하게
+                                        viewModel.setSelectSchedule(scheduleData)
+                                        navController?.navigate("edit")
+                                    }
+                                },
+                                isLoading = false, // 데이터 로드 완료
+                                apiCallSuccess = true // API 호출 성공 상태
+                            )
+                        }
+                    } else {
+                        // API 호출은 성공했으나, 분석 결과 일정이 없는 경우 (Gemini가 "fail"을 반환하지는 않았지만, 파싱 후 유효한 일정이 없는 경우 등)
+                        // 또는 AddScheduleScreen에서 성공 후 scheduleList에 아무것도 추가하지 않은 경우
+                        item {
+                            Text(
+                                text = "분석 실패",
+                                color = uiColor,
+                                modifier = Modifier.padding(top = 50.dp)
+                            )
+                        }
                     }
-                } else {
-                    // scheduleList가 비어 있고, 로딩 중이 아니며, API 호출 성공 상태일 때
+                }
+                // 조건 3: API 호출이 완료되었고 (isLoading == false), 실패했을 때
+                else { // (isLoading == false && !apiCallSuccessFromViewModel)
+                    // 이 경우, AddScheduleScreen에서 API 호출 실패 후 이 화면으로 왔을 때 해당될 수 있습니다.
+                    // 또는 SelectScheduleScreen이 자체적으로 데이터를 로드하려다 실패한 경우.
+                    // 기존 코드에서는 이 경우에도 Shimmer를 보여줬지만,
+                    // "일정이 없습니다" 또는 "데이터 로드 실패" 메시지를 보여주는 것이 더 적절할 수 있습니다.
+                    // 여기서는 "일정이 없습니다"로 통일 (Shimmer를 원하면 if (isLoading || !apiCallSuccessFromViewModel) 사용)
                     item {
-                        Text(text = "일정이 없습니다.", color = uiColor)
+                        Text(
+                            text = "데이터 로드 실패",
+                            color = uiColor,
+                            modifier = Modifier.padding(top = 50.dp)
+                        )
                     }
+                    // 기존 Shimmer 로직을 유지하고 싶다면, 이 else 블록을 삭제하고
+                    // 최상단의 if 조건을 (isLoading || !apiCallSuccessFromViewModel) 로 되돌립니다.
+                    // 하지만 이렇게 하면 API 실패 시에도 Shimmer가 계속 보일 수 있습니다.
                 }
             }
         }

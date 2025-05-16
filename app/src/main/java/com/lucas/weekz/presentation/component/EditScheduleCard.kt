@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
@@ -47,12 +48,14 @@ fun EditScheduleCard(
         ) {
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "제목",
+                    text = "Title",
                     color = Black,
                     style = Typography.bodyMedium,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Box(
                     modifier = Modifier.fillMaxWidth()
                 ){ OutlinedTextField(
@@ -78,12 +81,14 @@ fun EditScheduleCard(
             Spacer(modifier = Modifier.size(-20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "날짜",
+                    text = "Date",
                     color = Black,
                     style = Typography.bodyMedium,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Box(
                     modifier = Modifier.fillMaxWidth()
                 ){
@@ -110,12 +115,14 @@ fun EditScheduleCard(
             Spacer(modifier = Modifier.size(-20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "시간",
+                    text = "Time",
                     color = Black,
                     style = Typography.bodyMedium,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Box(
                     modifier = Modifier.fillMaxWidth()
                 ){
@@ -142,12 +149,14 @@ fun EditScheduleCard(
             Spacer(modifier = Modifier.size(-20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "장소",
+                    text = "Location",
                     color = Black,
                     style = Typography.bodyMedium,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Box(
                     modifier = Modifier.fillMaxWidth()
                 ){
@@ -174,12 +183,14 @@ fun EditScheduleCard(
             Spacer(modifier = Modifier.size(-20.dp))
             Row(verticalAlignment = Alignment.CenterVertically) {
                 Text(
-                    text = "메모",
+                    text = "Memo",
                     color = Black,
                     style = Typography.bodyMedium,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    modifier = Modifier
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Box(
                     modifier = Modifier.fillMaxWidth()
                 ){

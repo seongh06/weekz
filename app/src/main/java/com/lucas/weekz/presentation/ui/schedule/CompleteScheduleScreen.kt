@@ -3,7 +3,6 @@ package com.lucas.weekz.presentation.ui.schedule
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -25,18 +24,18 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.lucas.weekz.R
-import com.lucas.weekz.presentation.theme.Black
 import com.lucas.weekz.presentation.theme.Gray
-import com.lucas.weekz.presentation.theme.ThemedApp
+import com.lucas.weekz.presentation.theme.LocalAppTheme
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.ui.main.Screen
 import com.lucas.weekz.presentation.ui.sign.AppLanguage
 import com.lucas.weekz.presentation.ui.sign.getSavedLanguageCode
+import com.lucas.weekz.presentation.utill.getMediumImageForTheme
+import com.lucas.weekz.presentation.utill.getSmallImageForTheme
+import com.lucas.weekz.presentation.utill.getUiColorForTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -47,20 +46,16 @@ fun CompleteScheduleScreen(
     BackHandler {
         // 시스템 뒤로가기 버튼이 눌렸을 때 아무것도 하지 않음
     }
-
-    val uiColor = if (isSystemInDarkTheme()) Color.White else Black
     val context = LocalContext.current
+    val uiColor = getUiColorForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val smallImage = getSmallImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val mediumImage = getMediumImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조    val context = LocalContext.current
     // 현재 언어 설정 가져오기
     val currentLanguage = remember {
         when (getSavedLanguageCode(context)) {
             "en" -> AppLanguage.ENGLISH
             else -> AppLanguage.KOREAN
         }
-    }
-    val mediumImage = if (isSystemInDarkTheme()) {
-        R.drawable.img_medium_black_1
-    } else {
-        R.drawable.img_medium_white_1
     }
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -134,13 +129,5 @@ fun CompleteScheduleScreen(
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun CompleteScheduleScreenPreview() {
-    ThemedApp {
-        CompleteScheduleScreen(navController = null, viewModel = hiltViewModel())
     }
 }

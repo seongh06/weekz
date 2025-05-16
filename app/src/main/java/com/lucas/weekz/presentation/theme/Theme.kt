@@ -1,28 +1,27 @@
 package com.lucas.weekz.presentation.theme
 
+import android.app.Activity
 import android.os.Build
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.ui.Modifier
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
-import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.SideEffect
 import androidx.compose.runtime.compositionLocalOf
-import androidx.compose.foundation.Image
-import androidx.compose.material3.Typography
-import androidx.compose.runtime.staticCompositionLocalOf
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
+import androidx.core.view.WindowCompat
 import com.lucas.weekz.R
-import java.time.format.TextStyle
 
 enum class AppTheme {
     DARK1, DARK2, DARK3, DARK4, DARK5,
@@ -65,51 +64,50 @@ fun getThemeColorScheme(theme: AppTheme) = when(theme){
 val LocalAppTheme = compositionLocalOf { AppTheme.LIGHT1 } // 기본 테마를 DARK1로 설정
 
 @Composable
-fun ThemedApp(content: @Composable () -> Unit) {
+fun ThemedApp(
+    // MainActivity에서 관리하는 currentAppTheme을 직접 받도록 수정
+    currentAppTheme: AppTheme, // MainActivity로부터 현재 테마를 전달받음
+    content: @Composable () -> Unit
+) {
     val isSystemInDarkTheme = isSystemInDarkTheme()
-    val defaultTheme = if (isSystemInDarkTheme) AppTheme.DARK1 else AppTheme.LIGHT1
-    val currentTheme = LocalAppTheme.current
-    val finalTheme = when{
-        currentTheme in listOf(AppTheme.LIGHT1,AppTheme.LIGHT2,AppTheme.LIGHT3, AppTheme.LIGHT4) && isSystemInDarkTheme == false -> currentTheme
-        currentTheme in listOf(AppTheme.DARK1,AppTheme.DARK2,AppTheme.DARK3,AppTheme.DARK4,AppTheme.DARK5) && isSystemInDarkTheme -> currentTheme
-        else -> defaultTheme
-    }
-    val currentBackgroundId = themeBackgroundMap[finalTheme] ?: R.drawable.bg_light_1
-    // colorScheme
+    val finalTheme = currentAppTheme
+    val currentBackgroundId = themeBackgroundMap[finalTheme] ?:
+    if (isSystemInDarkTheme) R.drawable.bg_dark_1 else R.drawable.bg_light_1 // fallback 배경
+
     val colorScheme = getThemeColorScheme(finalTheme)
 
-    CompositionLocalProvider(LocalAppTheme provides finalTheme) {
-        WeekzTheme(
-            darkTheme = finalTheme in listOf(
-                AppTheme.DARK1,
-                AppTheme.DARK2,
-                AppTheme.DARK3,
-                AppTheme.DARK4,
-                AppTheme.DARK5
-            ),
-            dynamicColor = false
+    WeekzTheme( // MaterialTheme을 직접 호출하거나, WeekzTheme 내부 로직을 여기에 통합할 수 있습니다.
+        darkTheme = finalTheme in listOf(
+            AppTheme.DARK1,
+            AppTheme.DARK2,
+            AppTheme.DARK3,
+            AppTheme.DARK4,
+            AppTheme.DARK5
+        ),
+        dynamicColor = false, // 필요에 따라 true로 설정하여 동적 색상 사용
+        colorSchemeToUse = colorScheme // WeekzTheme에 결정된 colorScheme 전달
+    ) {
+        Surface(
+            modifier = Modifier.fillMaxSize()
+            // colorScheme을 Surface에 직접 적용할 수도 있지만,
+            // MaterialTheme(colorScheme = ...)을 통해 전체적으로 적용하는 것이 일반적입니다.
         ) {
-            Surface (
-                modifier = Modifier.fillMaxSize()
-            ) {
-                // 배경 이미지 설정
-                Image(
-                    painter = painterResource(id = currentBackgroundId),
-                    contentDescription = "배경 이미지",
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.FillBounds
-                )
-                // 내부 Composable 함수 호출
-                content()
-            }
+            Image(
+                painter = painterResource(id = currentBackgroundId),
+                contentDescription = "배경 이미지",
+                modifier = Modifier.fillMaxSize(),
+                contentScale = ContentScale.FillBounds
+            )
+            content()
         }
     }
 }
 
 @Composable
 fun WeekzTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    darkTheme: Boolean, // ThemedApp에서 계산된 darkTheme 여부를 전달받음
     dynamicColor: Boolean = true,
+    colorSchemeToUse: androidx.compose.material3.ColorScheme, // ThemedApp에서 결정된 ColorScheme을 전달받음
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -117,13 +115,20 @@ fun WeekzTheme(
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        else -> colorSchemeToUse // ThemedApp에서 전달받은 colorScheme 사용
+    }
+    val view = LocalView.current
+    if (!view.isInEditMode) {
+        SideEffect {
+            val window = (view.context as Activity).window
+            window.statusBarColor = colorScheme.primary.toArgb() // 필요에 따라 상태 표시줄 색상 조정
+            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = !darkTheme // 상태 표시줄 아이콘 색상 조정
+        }
     }
 
     MaterialTheme(
         colorScheme = colorScheme,
+        typography = Typography, // Typography 정의가 있다면 추가
         content = content
     )
 }

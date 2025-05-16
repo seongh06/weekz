@@ -61,9 +61,9 @@ fun SelectScheduleCard(
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
                     modifier = Modifier
-                        .width(60.dp) // 레이블의 너비를 고정하여 Shimmer 크기 예측
+                        .width(65.dp) // 레이블의 너비를 고정하여 Shimmer 크기 예측
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Text(
                     text = scheduleData?.title ?: "----------", // 로딩 중일 때 표시할 플레이스홀더 텍스트
                     color = Black,
@@ -92,9 +92,9 @@ fun SelectScheduleCard(
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
                     modifier = Modifier
-                        .width(60.dp) // 레이블의 너비를 고정
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Text(
                     text = scheduleData?.date ?: "----------",
                     color = Black,
@@ -123,9 +123,9 @@ fun SelectScheduleCard(
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
                     modifier = Modifier
-                        .width(60.dp) // 레이블의 너비를 고정
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Text(
                     text = scheduleData?.time ?: "----------",
                     color = Black,
@@ -154,9 +154,9 @@ fun SelectScheduleCard(
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
                     modifier = Modifier
-                        .width(60.dp) // 레이블의 너비를 고정
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Text(
                     text = scheduleData?.location ?: "----------",
                     color = Black,
@@ -185,9 +185,9 @@ fun SelectScheduleCard(
                     style = Typography.bodyMedium,
                     textAlign = TextAlign.Start,
                     modifier = Modifier
-                        .width(60.dp) // 레이블의 너비를 고정
+                        .width(65.dp) // 레이블의 너비를 고정
                 )
-                Spacer(modifier = Modifier.size(20.dp))
+                Spacer(modifier = Modifier.size(15.dp))
                 Text(
                     text = scheduleData?.memo ?: "----------",
                     color = Black,

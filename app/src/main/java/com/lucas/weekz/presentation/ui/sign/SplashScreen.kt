@@ -4,7 +4,6 @@ import android.preference.PreferenceManager
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,7 +24,6 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -39,9 +37,13 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.lucas.weekz.R
-import com.lucas.weekz.presentation.theme.Black
 import com.lucas.weekz.presentation.theme.LocalAppTheme
 import com.lucas.weekz.presentation.theme.Typography
+import com.lucas.weekz.presentation.utill.getLargeImageForTheme
+import com.lucas.weekz.presentation.utill.getMediumImageForTheme
+import com.lucas.weekz.presentation.utill.getOppositeUiColorForTheme
+import com.lucas.weekz.presentation.utill.getSmallImageForTheme
+import com.lucas.weekz.presentation.utill.getUiColorForTheme
 
 
 // SharedPreferences에 언어 코드를 저장하는 키
@@ -89,8 +91,6 @@ fun SplashScreen(navController: NavHostController? = null,
     val context = LocalContext.current
     val currentTheme = LocalAppTheme.current
 
-    val coroutineScope = rememberCoroutineScope()
-
     LaunchedEffect(key1 = true) {
         Log.d("SplashScreen", currentTheme.toString())
     }
@@ -109,12 +109,11 @@ fun SplashScreen(navController: NavHostController? = null,
         saveLanguageCode(context, currentLanguage.code)
         Log.d("SplashScreen", "Language saved: ${currentLanguage.code}")
     }
-
-    val bigImage = if (isSystemInDarkTheme()) {
-        R.drawable.img_big_black
-    } else {
-        R.drawable.img_big_white
-    }
+    val uiColor = getUiColorForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val oppositeUiColor = getOppositeUiColorForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val smallImage = getSmallImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val mediumImage = getMediumImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조    val context = LocalContext.current
+    val largeImage = getLargeImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
@@ -137,7 +136,7 @@ fun SplashScreen(navController: NavHostController? = null,
                         Image(
                             painter = painterResource(id = R.drawable.ic_setting), // 설정 아이콘 리소스
                             contentDescription = "설정", // 접근성 설명
-                            colorFilter = ColorFilter.tint(if (isSystemInDarkTheme()) Color.White else Black), // 테마에 따라 아이콘 색상 변경
+                            colorFilter = ColorFilter.tint(uiColor),
                             modifier = Modifier.size(24.dp)
                         )
                     }
@@ -153,7 +152,6 @@ fun SplashScreen(navController: NavHostController? = null,
                     onBoxClick() // 클릭 시 전달받은 람다 함수 호출
                 }
         ) {
-            val uiColor = if (isSystemInDarkTheme()) Color.White else Black
             Column(modifier = Modifier.fillMaxSize()) {
                 Text(
                     text = stringResource(id = currentLanguage.getSplashTitleResourceId()),
@@ -164,7 +162,7 @@ fun SplashScreen(navController: NavHostController? = null,
                 )
                 Spacer(Modifier.weight(1f))
                 Image(
-                    painter = painterResource(id = bigImage),
+                    painter = painterResource(id = largeImage),
                     contentDescription = "캐릭터 이미지",
                     modifier = Modifier
                         .size(341.dp, 400.dp)

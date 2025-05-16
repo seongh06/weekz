@@ -5,7 +5,6 @@ import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -34,22 +33,24 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.lucas.weekz.R
-import com.lucas.weekz.presentation.theme.Black
+import com.lucas.weekz.presentation.theme.AppTheme
+import com.lucas.weekz.presentation.theme.LocalAppTheme
 import com.lucas.weekz.presentation.theme.Typography
 import com.lucas.weekz.presentation.ui.sign.AppLanguage
 import com.lucas.weekz.presentation.ui.sign.SplashActivity
 import com.lucas.weekz.presentation.ui.sign.getSavedLanguageCode
-
+import com.lucas.weekz.presentation.utill.getMediumImageForTheme
+import com.lucas.weekz.presentation.utill.getSmallImageForTheme
+import com.lucas.weekz.presentation.utill.getUiColorForTheme
 
 // 테마 변경을 처리할 함수를 외부에서 주입받도록 수정
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
 fun SettingThemeScreen(
     navController: NavHostController?,
-    onThemeSelected: (isDarkTheme: Boolean) -> Unit // 테마 변경 함수 추가
+    onThemeSelected: (selectedTheme: AppTheme) -> Unit // 콜백 파라미터를 AppTheme으로 변경
 ) {
     val context = LocalContext.current
-    val uiColor = if (isSystemInDarkTheme()) Color.White else Black
     // 현재 언어 설정 가져오기
     val currentLanguage = remember {
         when (getSavedLanguageCode(context)) {
@@ -57,16 +58,29 @@ fun SettingThemeScreen(
             else -> AppLanguage.KOREAN
         }
     }
-
-    val smallImage = if (isSystemInDarkTheme()) {
-        R.drawable.img_small_black_1
-    } else {
-        R.drawable.img_small_white_1
-    }
-
+    val uiColor = getUiColorForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val smallImage = getSmallImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
+    val mediumImage = getMediumImageForTheme(LocalAppTheme.current) // 현재 테마 전달 또는 함수 내부에서 참조
     // 가로 스크롤 상태 기억
     val lightThemeScrollState = rememberScrollState()
     val darkThemeScrollState = rememberScrollState()
+
+    // Light 테마 이미지 리소스와 AppTheme 매핑
+    val lightThemes = listOf(
+        AppTheme.LIGHT1 to R.drawable.img_theme_light_1,
+        AppTheme.LIGHT2 to R.drawable.img_theme_light_2,
+        AppTheme.LIGHT3 to R.drawable.img_theme_light_3,
+        AppTheme.LIGHT4 to R.drawable.img_theme_light_4
+    )
+
+    // Dark 테마 이미지 리소스와 AppTheme 매핑
+    val darkThemes = listOf(
+        AppTheme.DARK1 to R.drawable.img_theme_dark_1,
+        AppTheme.DARK2 to R.drawable.img_theme_dark_2,
+        AppTheme.DARK3 to R.drawable.img_theme_dark_3,
+        AppTheme.DARK4 to R.drawable.img_theme_dark_4,
+        AppTheme.DARK5 to R.drawable.img_theme_dark_5
+    )
 
     // Light 테마 이미지 리소스 (4개)
     val lightThemeImages = listOf(
@@ -146,9 +160,11 @@ fun SettingThemeScreen(
             Spacer(modifier = Modifier.size(30.dp))
 
             Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.Start,
-                verticalArrangement = Arrangement.spacedBy(8.dp) // 텍스트와 이미지 간 간격
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 // "Light" 텍스트
                 Text(
@@ -165,15 +181,14 @@ fun SettingThemeScreen(
                     horizontalArrangement = Arrangement.spacedBy(16.dp), // 이미지 간 간격
                     verticalAlignment = Alignment.CenterVertically // 이미지 세로 중앙 정렬
                 ) {
-                    lightThemeImages.forEach { imageResId ->
+                    lightThemes.forEach { (theme, imageResId) -> // AppTheme과 이미지 리소스 ID를 함께 사용
                         Image(
                             painter = painterResource(id = imageResId),
-                            contentDescription = "light theme",
+                            contentDescription = "light theme ${theme.name}", // contentDescription에 테마 이름 추가
                             modifier = Modifier
-                                .size(100.dp, 217.dp) // 이미지 크기 (예시) - 원하는 크기로 조정
+                                .size(103.dp, 223.dp)
                                 .clickable {
-                                    // Light 테마 선택 시 호출될 함수
-                                    onThemeSelected(false) // isDarkTheme = false
+                                    onThemeSelected(theme) // 선택된 AppTheme 전달
                                 }
                         )
                     }
@@ -183,7 +198,9 @@ fun SettingThemeScreen(
             Spacer(modifier = Modifier.size(30.dp))
             // Dark 테마 선택 영역
             Column(
-                modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 20.dp),
                 horizontalAlignment = Alignment.Start,
                 verticalArrangement = Arrangement.spacedBy(8.dp) // 텍스트와 이미지 간 간격
             ) {
@@ -202,14 +219,14 @@ fun SettingThemeScreen(
                     horizontalArrangement = Arrangement.spacedBy(16.dp), // 이미지 간 간격
                     verticalAlignment = Alignment.CenterVertically // 이미지 세로 중앙 정렬
                 ) {
-                    darkThemeImages.forEach { imageResId ->
+                    darkThemes.forEach { (theme, imageResId) -> // AppTheme과 이미지 리소스 ID를 함께 사용
                         Image(
                             painter = painterResource(id = imageResId),
-                            contentDescription = "dark theme",
+                            contentDescription = "dark theme ${theme.name}", // contentDescription에 테마 이름 추가
                             modifier = Modifier
-                                .size(100.dp, 217.dp) // 이미지 크기 (예시) - 원하는 크기로 조정
+                                .size(103.dp, 223.dp)
                                 .clickable {
-                                    onThemeSelected(true) // isDarkTheme = true
+                                    onThemeSelected(theme) // 선택된 AppTheme 전달
                                 }
                         )
                     }
